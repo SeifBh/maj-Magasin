@@ -1,37 +1,48 @@
 package tn.esprit.demo.entities;
 
-import java.util.Date;
-import java.util.HashSet;
+import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+
 
 @Entity
-public class Magasin {
+@Access(AccessType.PROPERTY)
+public class Magasin implements Serializable{
 
-	@Id
-	@GeneratedValue
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Long id;
 	private String nom;
 	private String localisation;
 
-	@ManyToMany
-    private Set<Article> articles = new HashSet<Article>();
-	
-	
 
-
+    private List<Article> articles;
+    
+	
+    @ManyToMany
+	public List<Article> getArticles() {
+		return articles;
+	}
+	public void setArticles(List<Article> articles) {
+		this.articles = articles;
+	}
 	public Magasin() {
 		super();
 	}
+	@Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+	@Column(name = "id")
 	public Long getId() {
 		return id;
 	}
@@ -50,13 +61,9 @@ public class Magasin {
 	public void setLocalisation(String localisation) {
 		this.localisation = localisation;
 	}
-	public Set<Article> getArticles() {
-		return articles;
-	}
-	public void setArticles(Set<Article> articles) {
-		this.articles = articles;
-	}
-	public Magasin(Long id, String nom, String localisation, Set<Article> articles) {
+	
+   
+	public Magasin(Long id, String nom, String localisation, List<Article> articles) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -68,10 +75,6 @@ public class Magasin {
 		return "Magasin [id=" + id + ", nom=" + nom + ", localisation=" + localisation + ", articles=" + articles + "]";
 	}
 
-	
-
-
-	
 	
 	
 	

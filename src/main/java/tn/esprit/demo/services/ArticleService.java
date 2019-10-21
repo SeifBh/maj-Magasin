@@ -53,11 +53,14 @@ public class ArticleService {
 		
 		Magasin mag = new Magasin() ;
 		
+		if (articleRepository.existsById(art.getId())) {
+		
 		
 		
 			art.setQuantite(quantite);
 			return true;
-		
+		}
+		return false;
 		 
 		
 	}

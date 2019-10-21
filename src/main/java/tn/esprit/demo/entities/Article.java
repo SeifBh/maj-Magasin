@@ -1,44 +1,54 @@
 package tn.esprit.demo.entities;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.io.Serializable;
 
+import java.util.List;
+
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+
 
 enum Type{
 	   Solid, Liquide, Gaz;
 	}
 
 @Entity
-public class Article {
+@Access(AccessType.PROPERTY)
+public class Article implements Serializable{
 
-	@Id
-	@GeneratedValue
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	
 	private Long id;
 	private String ref;
 	private String nom;
 	private String description;
 	private int quantite;
 
-	 @ManyToMany(mappedBy="articles")
-	 private Set<Magasin> magasins = new HashSet<Magasin>();
+
+
+    private List<Magasin> magasins;
+    
 	
-	//Version 2 start from here : by adding this attribute to article entity
-	
-	
+    
+    
+    
 	
 	public Article() {
 		super();
 	}
+	@Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+	@Column(name = "id")
 	public Long getId() {
 		return id;
 	}
@@ -63,20 +73,20 @@ public class Article {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public float getQuantite() {
+	public int getQuantite() {
 		return quantite;
 	}
 	public void setQuantite(int quantite) {
 		this.quantite = quantite;
 	}
-	
-	public Set<Magasin> getMagasins() {
+	@ManyToMany(mappedBy = "articles")
+	public List<Magasin> getMagasins() {
 		return magasins;
 	}
-	public void setMagasins(Set<Magasin> magasins) {
+	public void setMagasins(List<Magasin> magasins) {
 		this.magasins = magasins;
 	}
-	public Article(Long id, String ref, String nom, String description, int quantite, Set<Magasin> magasins) {
+	public Article(Long id, String ref, String nom, String description, int quantite, List<Magasin> magasins) {
 		super();
 		this.id = id;
 		this.ref = ref;
@@ -90,10 +100,9 @@ public class Article {
 		return "Article [id=" + id + ", ref=" + ref + ", nom=" + nom + ", description=" + description + ", quantite="
 				+ quantite + ", magasins=" + magasins + "]";
 	}
-
-
 	
-	
+    
+
 	
 
 	

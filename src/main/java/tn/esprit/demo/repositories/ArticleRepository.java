@@ -10,7 +10,6 @@ import tn.esprit.demo.entities.Article;
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
-    @Query("Select c.* from Article c where c.id=?1")
-    public Article findbyIdArticle(Long id);
+  
     
 }
